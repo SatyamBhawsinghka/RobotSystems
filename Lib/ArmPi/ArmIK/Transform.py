@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # encoding:utf-8
 import cv2
-import sys
-sys.path.append('/home/pi/ArmPi/')
+
 import math
 import numpy as np
 from CameraCalibration.CalibrationConfig import *

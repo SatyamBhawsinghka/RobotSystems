@@ -70,7 +70,7 @@ class Perception(object):
         cv2.imshow(name, frame)
 
     def process(self, img):
-        img_copy = cv2.imread(img).copy()
+        img_copy = img.copy()
         img_h, img_w = img.shape[:2]
         cv2.line(img, (0, int(img_h / 2)), (img_w, int(img_h / 2)), (0, 0, 200), 1)
         cv2.line(img, (int(img_w / 2), 0), (int(img_w / 2), img_h), (0, 0, 200), 1)
@@ -204,17 +204,14 @@ if __name__ == '__main__':
     percept = Perception()
     while True:
         img = percept.sense
-        percept.show(img, 'Frame')
-        
-
-        # if img is not None:
-        #     Frame = percept.process(img)
-        #     percept.show(Frame)
-        #     key = cv2.waitKey(1)
-        #     if key == 27:
-        #         percept.stop
-        #         print("Perception code ended")
-        #         break
+        if img is not None:
+            Frame = percept.process(img)
+            percept.show(Frame)
+            key = cv2.waitKey(1)
+            if key == 27:
+                percept.stop
+                print("Perception code ended")
+                break
 
 
 

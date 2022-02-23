@@ -4,7 +4,7 @@ import cv2
 import time
 import threading
 import numpy as np
-
+import sys
 from CameraCalibration.CalibrationConfig import *
 
 if sys.version_info.major == 2:

@@ -67,8 +67,8 @@ class Perception(object):
         self.camera.camera_close()
         cv2.destroyAllWindows()
 
-    def show(self, name='Frame', frame):
-        cv2.imshow(name, frame)
+    def show(self, frame):
+        cv2.imshow('frame', frame)
 
     def process(self):
         img = self.image
@@ -208,7 +208,7 @@ if __name__ == '__main__':
         percept.sense
         if percept.image is not None:
             Frame = percept.process
-            percept.show('frame',Frame)
+            percept.show(Frame)
             key = cv2.waitKey(1)
             if key == 27:
                 percept.stop

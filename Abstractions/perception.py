@@ -11,7 +11,7 @@ import math
 import numpy as np
 import sys
 sys.path.append('../Lib/ArmPi/')
-from Camera import Camera
+import Camera
 from LABConfig import color_range
 from ArmIK.Transform import getMaskROI, getROI, getCenter, convertCoordinate
 from CameraCalibration.CalibrationConfig import square_length
@@ -22,7 +22,7 @@ class Perception(object):
     @log_on_error(logging.DEBUG, "Error in constructor call")
     @log_on_end(logging.DEBUG, "Constructor finished")
     def __init__(self, logging_level='INFO'):
-        self.camera = Camera()
+        self.camera = Camera.Camera()
         self.target_color = ['red']
         self.isRunning = False
         self.size = (640, 480)
@@ -207,6 +207,7 @@ if __name__ == '__main__':
     percept = Perception('DEBUG')
     while True:
         percept.sense
+        print(percept.image)
         percept.show('frame',percept.image) #Checking
         if percept.image is not None:
             Frame = percept.process

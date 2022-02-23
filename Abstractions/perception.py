@@ -205,7 +205,7 @@ if __name__ == '__main__':
     while True:
         img = percept.sense
         if img is not None:
-            frame = img.copy()
+            frame = img.copy
             Frame = percept.process(frame)
             percept.show(Frame)
             key = cv2.waitKey(1)

@@ -10,7 +10,7 @@ import threading
 import math
 import numpy as np
 import sys
-sys.path.append('/../Lib/ArmPi/')
+sys.path.append('../Lib/ArmPi/')
 from Camera import Camera
 from LABConfig import color_range
 from ArmIK.Transform import getMaskROI, getROI, getCenter, convertCoordinate

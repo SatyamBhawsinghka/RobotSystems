@@ -59,7 +59,7 @@ class Perception(object):
     def sense(self):
         img = self.camera.frame()
         self.isRunning = True
-        return img.copy()
+        return img
 
     def stop(self):
         self.isRunning = False
@@ -205,8 +205,7 @@ if __name__ == '__main__':
     while True:
         img = percept.sense
         if img is not None:
-            frame = img.copy
-            Frame = percept.process(frame)
+            Frame = percept.process(img)
             percept.show(Frame)
             key = cv2.waitKey(1)
             if key == 27:

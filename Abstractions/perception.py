@@ -48,6 +48,7 @@ class Perception(object):
         self.detect_color = 'None'
         self.draw_color = self.range_rgb["black"]
         self.color_list = []
+        self.image = None
         if logging_level == 'INFO':
             logging.basicConfig(format=logging_format, level=logging.INFO, datefmt="%H:%M:%S")
         elif logging_level == 'DEBUG':
@@ -57,20 +58,21 @@ class Perception(object):
         atexit.register(self.stop)
 
     def sense(self):
-        img = self.camera.frame()
+        self.image = self.camera.frame()
         self.isRunning = True
-        return img
+
 
     def stop(self):
         self.isRunning = False
         self.camera.camera_close()
         cv2.destroyAllWindows()
 
-    def show(self, frame, name='Frame'):
+    def show(self, name='Frame', frame):
         cv2.imshow(name, frame)
 
-    def process(self, img):
-        img_copy = img.copy()
+    def process(self):
+        img = self.image
+        img_copy = self.image.copy()
         img_h, img_w = img.shape[:2]
         cv2.line(img, (0, int(img_h / 2)), (img_w, int(img_h / 2)), (0, 0, 200), 1)
         cv2.line(img, (int(img_w / 2), 0), (int(img_w / 2), img_h), (0, 0, 200), 1)
@@ -203,10 +205,10 @@ if __name__ == '__main__':
     time.sleep(1)
     percept = Perception()
     while True:
-        img = percept.sense
-        if img is not None:
-            Frame = percept.process(img)
-            percept.show(Frame)
+        percept.sense
+        if percept.image is not None:
+            Frame = percept.process
+            percept.show('frame',Frame)
             key = cv2.waitKey(1)
             if key == 27:
                 percept.stop

@@ -58,7 +58,8 @@ class Perception(object):
         atexit.register(self.stop)
 
     def sense(self):
-        self.image = self.camera.frame
+        img = self.camera.frame
+        self.image = img.copy()
         self.isRunning = True
 
 
@@ -206,7 +207,7 @@ if __name__ == '__main__':
     percept = Perception('DEBUG')
     while True:
         percept.sense
-        # percept.show('frame', percept.image) #Checking
+        percept.show('frame',percept.image) #Checking
         if percept.image is not None:
             Frame = percept.process
             percept.show('frame',Frame)

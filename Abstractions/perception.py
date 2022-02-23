@@ -22,7 +22,7 @@ class Perception(object):
     @log_on_error(logging.DEBUG, "Error in constructor call")
     @log_on_end(logging.DEBUG, "Constructor finished")
     def __init__(self, logging_level='INFO'):
-        self.camera = Camera.Camera()
+        self.camera = Camera()
         self.target_color = ['red']
         self.isRunning = False
         self.size = (640, 480)

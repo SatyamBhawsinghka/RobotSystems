@@ -11,7 +11,7 @@ import math
 import numpy as np
 import sys
 sys.path.append('/../Lib/ArmPi/')
-import Camera
+from Camera import Camera
 from LABConfig import color_range
 from ArmIK.Transform import getMaskROI, getROI, getCenter, convertCoordinate
 from CameraCalibration.CalibrationConfig import square_length

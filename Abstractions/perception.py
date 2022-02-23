@@ -6,16 +6,17 @@ import atexit
 from logdecorator import log_on_start, log_on_end, log_on_error
 import cv2
 import time
-import threading
 import math
 import numpy as np
 import sys
 sys.path.append('../Lib/ArmPi/')
-from Camera import Camera
-from LABConfig import color_range
-from ArmIK.Transform import getMaskROI, getROI, getCenter, convertCoordinate
-from CameraCalibration.CalibrationConfig import square_length
-camera_default = Camera()
+import Camera
+from LABConfig import *
+from ArmIK.Transform import *
+from ArmIK.ArmMoveIK import *
+import HiwonderSDK.Board as Board
+from CameraCalibration.CalibrationConfig import *
+camera_default = Camera.Camera()
 
 class Perception(object):
 
@@ -203,7 +204,7 @@ class Perception(object):
 
 
 if __name__ == '__main__':
-    camera= Camera()
+    camera = Camera.Camera()
     print("Perception starting in a second")
     time.sleep(1)
     percept = Perception('DEBUG',camera)

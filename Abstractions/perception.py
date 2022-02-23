@@ -59,15 +59,15 @@ class Perception(object):
     def sense(self):
         img = self.camera.frame()
         self.isRunning = True
-        return img
+        return img, img.copy()
 
     def stop(self):
         self.isRunning = False
         self.camera.camera_close()
         cv2.destroyAllWindows()
 
-    def show(self, frame):
-        cv2.imshow('Frame', frame)
+    def show(self, frame, name='Frame'):
+        cv2.imshow(name, frame)
 
     def process(self, img):
         img_copy = cv2.imread(img).copy()
@@ -203,15 +203,19 @@ if __name__ == '__main__':
     time.sleep(1)
     percept = Perception()
     while True:
-        img = percept.sense
-        if img is not None:
-            Frame = percept.process(img)
-            percept.show(Frame)
-            key = cv2.waitKey(1)
-            if key == 27:
-                percept.stop
-                print("Perception code ended")
-                break
+        img, img1 = percept.sense
+        percept.show(img, 'Frame')
+        time.sleep(3)
+        percept.show(img1, 'copy')
+        time.sleep(3)
+        # if img is not None:
+        #     Frame = percept.process(img)
+        #     percept.show(Frame)
+        #     key = cv2.waitKey(1)
+        #     if key == 27:
+        #         percept.stop
+        #         print("Perception code ended")
+        #         break
 
 
 

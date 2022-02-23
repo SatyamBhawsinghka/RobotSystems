@@ -1,9 +1,6 @@
 #!/usr/bin/python3
 # coding=utf8
 import logging
-
-from Lib.ArmPi.LABConfig import color_range
-
 logging_format = "%(asctime)s: %(message)s"
 import atexit
 from logdecorator import log_on_start, log_on_end, log_on_error

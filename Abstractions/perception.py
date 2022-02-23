@@ -15,14 +15,14 @@ from Camera import Camera
 from LABConfig import color_range
 from ArmIK.Transform import getMaskROI, getROI, getCenter, convertCoordinate
 from CameraCalibration.CalibrationConfig import square_length
-
+camera_default = Camera()
 
 class Perception(object):
 
     @log_on_start(logging.DEBUG, "Constructor called ")
     @log_on_error(logging.DEBUG, "Error in constructor call")
     @log_on_end(logging.DEBUG, "Constructor finished")
-    def __init__(self, logging_level='INFO',camera):
+    def __init__(self, logging_level='INFO',camera=camera_default):
         self.camera = camera
         self.target_color = ['red']
         self.isRunning = False
@@ -203,7 +203,7 @@ class Perception(object):
 
 
 if __name__ == '__main__':
-    camera = Camera()
+    camera= Camera()
     print("Perception starting in a second")
     time.sleep(1)
     percept = Perception('DEBUG',camera)

@@ -59,7 +59,7 @@ class Perception(object):
     def sense(self):
         img = self.camera.frame()
         self.isRunning = True
-        return [img, img.copy()]
+        return img
 
     def stop(self):
         self.isRunning = False
@@ -204,12 +204,9 @@ if __name__ == '__main__':
     percept = Perception()
     while True:
         img = percept.sense
-        img1 = img[1]
-        img = img[0]
         percept.show(img, 'Frame')
-        time.sleep(3)
-        percept.show(img1, 'copy')
-        time.sleep(3)
+        
+
         # if img is not None:
         #     Frame = percept.process(img)
         #     percept.show(Frame)

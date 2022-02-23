@@ -206,7 +206,7 @@ if __name__ == '__main__':
     percept = Perception('DEBUG')
     while True:
         percept.sense
-        percept.show('frame',percept.Image) #Checking
+        percept.show('frame',percept.image) #Checking
         if percept.image is not None:
             Frame = percept.process
             percept.show('frame',Frame)

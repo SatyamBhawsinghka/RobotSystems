@@ -208,8 +208,9 @@ class Perception(object):
 
 if __name__ == '__main__':
     camera = Camera.Camera()
-    camera.camera_close()
+    # camera.camera_close()
     camera.camera_open()
+    time.sleep(1)
     # print("Perception starting in a second")
     # time.sleep(1)
     # percept = Perception(camera,'DEBUG')

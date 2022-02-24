@@ -58,12 +58,11 @@ class Perception(object):
             logging.basicConfig(format=logging_format, level=logging.DEBUG, datefmt="%H:%M:%S")
 
         self.camera.camera_open()
-        atexit.register(self.stop)
+        time.sleep(1)
+        atexit.register(self.stop())
 
     def sense(self):
-        # self.camera.camera_task()
         img = self.camera.frame
-        print(img)
         self.image = img.copy()
         self.isRunning = True
 
@@ -208,27 +207,21 @@ class Perception(object):
 
 if __name__ == '__main__':
     camera = Camera.Camera()
-    # camera.camera_close()
-    camera.camera_open()
+    print("Perception starting in a second")
     time.sleep(1)
-    # print("Perception starting in a second")
-    # time.sleep(1)
-    # percept = Perception(camera,'DEBUG')
+    percept = Perception(camera,'DEBUG')
     while True:
-        # camera.camera_task()
-        print(camera.frame)
-        time.sleep(0.01)
-        # percept.sense()
-        # print(percept.image)
-        # percept.show('frame',percept.image) #Checking
-        # if percept.image is not None:
-        #     Frame = percept.process
-        #     percept.show('frame',Frame)
-        #     key = cv2.waitKey(1)
-        #     if key == 27:
-        #         percept.stop
-        #         print("Perception code ended")
-        #         break
+        percept.sense()
+        print(percept.image)
+        percept.show('frame',percept.image) #Checking
+        if percept.image is not None:
+            Frame = percept.process
+            percept.show('frame',Frame)
+            key = cv2.waitKey(1)
+            if key == 27:
+                percept.stop
+                print("Perception code ended")
+                break
 
 
 

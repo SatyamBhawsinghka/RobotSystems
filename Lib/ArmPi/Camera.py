@@ -27,8 +27,8 @@ class Camera:
         self.newcameramtx, roi = cv2.getOptimalNewCameraMatrix(self.mtx, self.dist, (self.width, self.height), 0, (self.width, self.height))
         self.mapx, self.mapy = cv2.initUndistortRectifyMap(self.mtx, self.dist, None, self.newcameramtx, (self.width,self.height), 5)
         
-        self.th = threading.Thread(target=self.camera_task, args=(), daemon=True)
-        self.th.start()
+        # self.th = threading.Thread(target=self.camera_task, args=(), daemon=True)
+        # self.th.start()
 
     def camera_open(self):
         try:
@@ -52,31 +52,31 @@ class Camera:
             print('关闭摄像头失败:', e)
 
     def camera_task(self):
-        while True:
-            try:
-                if self.opened and self.cap.isOpened():
-                    ret, frame_tmp = self.cap.read()
-                    if ret:
-                        frame_resize = cv2.resize(frame_tmp, (self.width, self.height), interpolation=cv2.INTER_NEAREST)
-                        self.frame = cv2.remap(frame_resize, self.mapx, self.mapy, cv2.INTER_LINEAR)
-                    else:
-                        print(1)
-                        self.frame = None
-                        cap = cv2.VideoCapture(-1)
-                        ret, _ = cap.read()
-                        if ret:
-                            self.cap = cap
-                elif self.opened:
-                    print(2)
+        # while True:
+        try:
+            if self.opened and self.cap.isOpened():
+                ret, frame_tmp = self.cap.read()
+                if ret:
+                    frame_resize = cv2.resize(frame_tmp, (self.width, self.height), interpolation=cv2.INTER_NEAREST)
+                    self.frame = cv2.remap(frame_resize, self.mapx, self.mapy, cv2.INTER_LINEAR)
+                else:
+                    print(1)
+                    self.frame = None
                     cap = cv2.VideoCapture(-1)
                     ret, _ = cap.read()
                     if ret:
-                        self.cap = cap              
-                else:
-                    time.sleep(0.01)
-            except Exception as e:
-                print('获取摄像头画面出错:', e)
+                        self.cap = cap
+            elif self.opened:
+                print(2)
+                cap = cv2.VideoCapture(-1)
+                ret, _ = cap.read()
+                if ret:
+                    self.cap = cap
+            else:
                 time.sleep(0.01)
+        except Exception as e:
+            print('获取摄像头画面出错:', e)
+            time.sleep(0.01)
 
 if __name__ == '__main__':
     my_camera = Camera()

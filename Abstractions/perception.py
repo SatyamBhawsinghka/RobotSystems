@@ -61,6 +61,7 @@ class Perception(object):
         atexit.register(self.stop)
 
     def sense(self):
+        self.camera.camera_task()
         img = self.camera.frame
         print(img)
         self.image = img.copy()

@@ -59,13 +59,15 @@ class Perception(object):
         self.color_list = []
         self.image = None
 
-    @log_on_start(logging.DEBUG, "Constructor called ")
-    @log_on_error(logging.DEBUG, "Error in constructor call")
-    @log_on_end(logging.DEBUG, "Constructor finished")
+
+    @log_on_error(logging.DEBUG, "Can't save, Image empty")
     def sense(self):
         img = self.camera.frame
-        self.image = img.copy()
-        self.isRunning = True
+        if img is not None:
+            self.image = img.copy()
+            self.isRunning = True
+        else:
+            raise IOError("Camera frame empty")
 
 
     def stop(self):
@@ -73,8 +75,13 @@ class Perception(object):
         self.camera.camera_close()
         cv2.destroyAllWindows()
 
+    @log_on_error(logging.DEBUG, "Can't show, Image empty")
     def show(self, name='frame', frame=None):
-        cv2.imshow(name, frame)
+        if frame in not None:
+            cv2.imshow(name, frame)
+        else:
+            raise IOError("Input frame empty")
+
 
     def process(self):
         img = self.image

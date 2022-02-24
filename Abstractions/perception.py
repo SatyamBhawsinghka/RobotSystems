@@ -211,10 +211,8 @@ if __name__ == '__main__':
     percept = Perception(camera,'DEBUG')
     while True:
         percept.sense()
-        print(percept.image)
-        percept.show('frame',percept.image) #Checking
         if percept.image is not None:
-            Frame = percept.process
+            Frame = percept.process()
             percept.show('frame',Frame)
             key = cv2.waitKey(1)
             if key == 27:

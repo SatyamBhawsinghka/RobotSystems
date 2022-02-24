@@ -25,6 +25,7 @@ class Perception(object):
     @log_on_end(logging.DEBUG, "Constructor finished")
     def __init__(self, logging_level='INFO',camera=camera_default):
         self.camera = camera
+        print(self.camera)
         self.target_color = ['red']
         self.isRunning = False
         self.size = (640, 480)
@@ -61,6 +62,7 @@ class Perception(object):
 
     def sense(self):
         img = self.camera.frame
+        print(img)
         self.image = img.copy()
         self.isRunning = True
 

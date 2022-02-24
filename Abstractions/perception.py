@@ -77,7 +77,7 @@ class Perception(object):
 
     @log_on_error(logging.DEBUG, "Can't show, Image empty")
     def show(self, name='frame', frame=None):
-        if frame in not None:
+        if frame is not None:
             cv2.imshow(name, frame)
         else:
             raise IOError("Input frame empty")

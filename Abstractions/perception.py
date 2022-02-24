@@ -29,7 +29,6 @@ class Perception(object):
         elif logging_level == 'DEBUG':
             logging.basicConfig(format=logging_format, level=logging.DEBUG, datefmt="%H:%M:%S")
         self.camera = Camera.Camera()
-        time.sleep(1)
         self.camera.camera_open()
         time.sleep(1)
         self.target_color = ['red']

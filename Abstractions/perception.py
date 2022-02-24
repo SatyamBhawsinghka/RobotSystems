@@ -25,7 +25,6 @@ class Perception(object):
     @log_on_end(logging.DEBUG, "Constructor finished")
     def __init__(self, camera, logging_level='INFO'):
         self.camera = camera
-        print(self.camera)
         self.target_color = ['red']
         self.isRunning = False
         self.size = (640, 480)
@@ -59,7 +58,7 @@ class Perception(object):
 
         self.camera.camera_open()
         time.sleep(1)
-        atexit.register(self.stop())
+        # atexit.register(self.stop())
 
     def sense(self):
         img = self.camera.frame
@@ -219,7 +218,7 @@ if __name__ == '__main__':
             percept.show('frame',Frame)
             key = cv2.waitKey(1)
             if key == 27:
-                percept.stop
+                percept.stop()
                 print("Perception code ended")
                 break
 

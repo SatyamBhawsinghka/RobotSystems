@@ -16,14 +16,14 @@ from ArmIK.Transform import *
 from ArmIK.ArmMoveIK import *
 import HiwonderSDK.Board as Board
 from CameraCalibration.CalibrationConfig import *
-camera_default = Camera.Camera()
+# camera_default = Camera.Camera()
 
 class Perception(object):
 
     @log_on_start(logging.DEBUG, "Constructor called ")
     @log_on_error(logging.DEBUG, "Error in constructor call")
     @log_on_end(logging.DEBUG, "Constructor finished")
-    def __init__(self, logging_level='INFO',camera=camera_default):
+    def __init__(self, camera, logging_level='INFO'):
         self.camera = camera
         print(self.camera)
         self.target_color = ['red']
@@ -210,7 +210,7 @@ if __name__ == '__main__':
     camera = Camera.Camera()
     print("Perception starting in a second")
     time.sleep(1)
-    percept = Perception('DEBUG',camera)
+    percept = Perception(camera,'DEBUG')
     while True:
         percept.sense
         print(percept.image)

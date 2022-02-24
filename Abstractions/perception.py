@@ -214,8 +214,9 @@ class Perception(object):
 
 
 if __name__ == '__main__':
-    print("Perception starting in a second")
+    print("Perception starting")
     percept = Perception('DEBUG')
+    percept.setTargetColor(['red','blue','green'])
     while True:
         percept.sense()
         if percept.image is not None:

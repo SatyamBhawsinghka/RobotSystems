@@ -30,7 +30,7 @@ class Perception(object):
             logging.basicConfig(format=logging_format, level=logging.DEBUG, datefmt="%H:%M:%S")
         self.camera = Camera.Camera()
         self.camera.camera_open()
-        time.sleep(1)
+        time.sleep(1) #Time delay for thread in camera class to start generating frames
         self.target_color = ['red']
         self.isRunning = False
         self.size = (640, 480)

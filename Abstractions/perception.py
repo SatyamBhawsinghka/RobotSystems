@@ -214,8 +214,9 @@ if __name__ == '__main__':
     # time.sleep(1)
     # percept = Perception(camera,'DEBUG')
     while True:
-        camera.camera_task()
+        # camera.camera_task()
         print(camera.frame)
+        time.sleep(0.01)
         # percept.sense()
         # print(percept.image)
         # percept.show('frame',percept.image) #Checking

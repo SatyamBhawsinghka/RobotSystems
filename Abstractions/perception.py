@@ -16,15 +16,22 @@ from ArmIK.Transform import *
 from ArmIK.ArmMoveIK import *
 import HiwonderSDK.Board as Board
 from CameraCalibration.CalibrationConfig import *
-# camera_default = Camera.Camera()
+
 
 class Perception(object):
 
     @log_on_start(logging.DEBUG, "Constructor called ")
     @log_on_error(logging.DEBUG, "Error in constructor call")
     @log_on_end(logging.DEBUG, "Constructor finished")
-    def __init__(self, camera, logging_level='INFO'):
-        self.camera = camera
+    def __init__(self, logging_level='INFO'):
+        if logging_level == 'INFO':
+            logging.basicConfig(format=logging_format, level=logging.INFO, datefmt="%H:%M:%S")
+        elif logging_level == 'DEBUG':
+            logging.basicConfig(format=logging_format, level=logging.DEBUG, datefmt="%H:%M:%S")
+        self.camera = Camera.Camera()
+        time.sleep(1)
+        self.camera.camera_open()
+        time.sleep(1)
         self.target_color = ['red']
         self.isRunning = False
         self.size = (640, 480)
@@ -51,15 +58,10 @@ class Perception(object):
         self.draw_color = self.range_rgb["black"]
         self.color_list = []
         self.image = None
-        if logging_level == 'INFO':
-            logging.basicConfig(format=logging_format, level=logging.INFO, datefmt="%H:%M:%S")
-        elif logging_level == 'DEBUG':
-            logging.basicConfig(format=logging_format, level=logging.DEBUG, datefmt="%H:%M:%S")
 
-        self.camera.camera_open()
-        time.sleep(1)
-        # atexit.register(self.stop())
-
+    @log_on_start(logging.DEBUG, "Constructor called ")
+    @log_on_error(logging.DEBUG, "Error in constructor call")
+    @log_on_end(logging.DEBUG, "Constructor finished")
     def sense(self):
         img = self.camera.frame
         self.image = img.copy()
@@ -205,10 +207,8 @@ class Perception(object):
 
 
 if __name__ == '__main__':
-    camera = Camera.Camera()
     print("Perception starting in a second")
-    time.sleep(1)
-    percept = Perception(camera,'DEBUG')
+    percept = Perception('DEBUG')
     while True:
         percept.sense()
         if percept.image is not None:

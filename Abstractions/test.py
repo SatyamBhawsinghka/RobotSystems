@@ -21,6 +21,10 @@ from perception import Perception
 percept = Perception()
 AK = ArmIK()
 
+Board.setBusServoPulse(1, 500, 300)
+Board.setBusServoPulse(2, 500, 500)
+AK.setPitchRangeMoving((0, 10, 10), -30, -30, -90, 1500)
+time.sleep(1.5)
 result = AK.setPitchRangeMoving((percept.world_X, percept.world_Y, 7), -90, -90, 0)
 if result == False:
     print("Unreachable")

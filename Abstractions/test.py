@@ -16,9 +16,7 @@ from ArmIK.Transform import *
 from ArmIK.ArmMoveIK import *
 import HiwonderSDK.Board as Board
 from CameraCalibration.CalibrationConfig import *
-sys.path.append('../../Abstractions/')
-from perception import Perception
-percept = Perception()
+
 AK = ArmIK()
 
 Board.setBusServoPulse(1, 500, 300)
@@ -28,24 +26,36 @@ time.sleep(1.5)
 print('reset done')
 time.sleep(1)
 
-AK.setPitchRangeMoving((0, 0, 10), -30, -30, -90, 1500)
-time.sleep(1.5)
-print('moved to 0,0')
+result = AK.setPitchRangeMoving((0, 0, 0), -90, -90, 0)
+if result == False:
+    print('unreachable')
+else:
+    time.sleep(result[2]/1000)
+    print('moved to 0,0')
 time.sleep(1)
 
-AK.setPitchRangeMoving((0, 10, 10), -30, -30, -90, 1500)
-time.sleep(1.5)
-print('moved to 0,10')
+result = AK.setPitchRangeMoving((0, 10, 0), -90, -90, 0)
+if result == False:
+    print('unreachable')
+else:
+    time.sleep(result[2]/1000)
+    print('moved to 10,0')
 time.sleep(1)
 
-AK.setPitchRangeMoving((10, 10, 10), -30, -30, -90, 1500)
-time.sleep(1.5)
-print('moved to 10,10')
+result = AK.setPitchRangeMoving((0, 10, 10), -90, -90, 0)
+if result == False:
+    print('unreachable')
+else:
+    time.sleep(result[2]/1000)
+    print('moved to 10,10')
 time.sleep(1)
 
-AK.setPitchRangeMoving((10, 0, 10), -30, -30, -90, 1500)
-time.sleep(1.5)
-print('moved to 10,0')
+result = AK.setPitchRangeMoving((0, 0, 10), -90, -90, 0)
+if result == False:
+    print('unreachable')
+else:
+    time.sleep(result[2]/1000)
+    print('moved to 0,10')
 time.sleep(1)
 
 

@@ -232,7 +232,13 @@ if __name__ == '__main__':
 
     percept = Perception('DEBUG')
     percept.setTargetColor(['red','blue','green'])
-    
+    while True:
+        key = cv2.waitKey(1)
+        if key == 27:
+            break
+
+    print("main code end")
+
 
 
 

@@ -26,7 +26,7 @@ time.sleep(1.5)
 print('reset done')
 time.sleep(1)
 
-result = AK.setPitchRangeMoving((0, 0, 0), -90, -90, 0)
+result = AK.setPitchRangeMoving((0, 0, 10), -90, -90, 0)
 if result == False:
     print('unreachable')
 else:
@@ -34,7 +34,7 @@ else:
     print('moved to 0,0')
 time.sleep(1)
 
-result = AK.setPitchRangeMoving((0, 10, 0), -90, -90, 0)
+result = AK.setPitchRangeMoving((10, 0, 10), -90, -90, 0)
 if result == False:
     print('unreachable')
 else:
@@ -42,7 +42,7 @@ else:
     print('moved to 10,0')
 time.sleep(1)
 
-result = AK.setPitchRangeMoving((0, 10, 10), -90, -90, 0)
+result = AK.setPitchRangeMoving((10, 10, 10), -90, -90, 0)
 if result == False:
     print('unreachable')
 else:
@@ -50,7 +50,7 @@ else:
     print('moved to 10,10')
 time.sleep(1)
 
-result = AK.setPitchRangeMoving((0, 0, 10), -90, -90, 0)
+result = AK.setPitchRangeMoving((0, 10, 10), -90, -90, 0)
 if result == False:
     print('unreachable')
 else:

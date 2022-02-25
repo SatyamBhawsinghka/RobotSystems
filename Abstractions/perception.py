@@ -223,8 +223,8 @@ class Perception(object):
                 self.show(name, frame)
                 key = cv2.waitKey(1)
                 if key == 27:
-                    self.stop()
                     print("Perception code ended")
+                    self.stop()
                     break
 
 
@@ -235,9 +235,10 @@ if __name__ == '__main__':
     while True:
         key = cv2.waitKey(1)
         if key == 27:
+            print("main code end")
             break
 
-    print("main code end")
+    
 
 
 

@@ -42,6 +42,7 @@ class Perception(object):
         self.center_list = []
         self.last_x, self.last_y = 0, 0
         self.world_X, self.world_Y = 0, 0
+        self.world_x, self.world_y = 0, 0
         self.range_rgb = {
             'red': (0, 0, 255),
             'blue': (255, 0, 0),
@@ -51,7 +52,6 @@ class Perception(object):
         }
         self.rect = None
         self.count = 0
-        self.unreachable = False
         self.rotation_angle = 0
         self.start_count_t1 = True
         self.t1 = 0
@@ -130,16 +130,15 @@ class Perception(object):
                 img_centerx, img_centery = getCenter(self.rect, self.roi, self.size,
                                                      square_length)  # Get the coordinates of the center of the block
 
-                world_x, world_y = convertCoordinate(img_centerx, img_centery,
-                                                     self.size)  # Convert to real world coordinates
+                self.world_x, self.world_y = convertCoordinate(img_centerx, img_centery, self.size)  # Convert to real world coordinates
 
                 cv2.drawContours(img, [box], -1, self.range_rgb[color_area_max], 2)
-                cv2.putText(img, '(' + str(world_x) + ',' + str(world_y) + ')',
+                cv2.putText(img, '(' + str(self.world_x) + ',' + str(self.world_y) + ')',
                             (min(box[0, 0], box[2, 0]), box[2, 1] - 10),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, self.range_rgb[color_area_max], 1)  # draw center point
 
-                distance = math.sqrt(pow(world_x - self.last_x, 2) + pow(world_y - self.last_y, 2))  # Compare the last coordinates to determine whether to move
-                self.last_x, self.last_y = world_x, world_y
+                distance = math.sqrt(pow(self.world_x - self.last_x, 2) + pow(self.world_y - self.last_y, 2))  # Compare the last coordinates to determine whether to move
+                self.last_x, self.last_y = self.world_x, self.world_y
                 if not self.start_pick_up:
                     if color_area_max == 'red':  # red max
                         color = 1
@@ -153,7 +152,7 @@ class Perception(object):
                     # Cumulative judgment
                     if distance < 0.5:
                         self.count += 1
-                        self.center_list.extend((world_x, world_y))
+                        self.center_list.extend((self.world_x, self.world_y))
                         if self.start_count_t1:
                             start_count_t1 = False
                             self.t1 = time.time()

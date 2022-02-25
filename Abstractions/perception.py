@@ -8,6 +8,7 @@ import cv2
 import time
 import math
 import numpy as np
+import threading
 import sys
 sys.path.append('../Lib/ArmPi/')
 import Camera
@@ -24,6 +25,7 @@ class Perception(object):
     @log_on_error(logging.DEBUG, "Error in constructor call")
     @log_on_end(logging.DEBUG, "Constructor finished")
     def __init__(self, logging_level='INFO'):
+        print("Perception starting")
         if logging_level == 'INFO':
             logging.basicConfig(format=logging_format, level=logging.INFO, datefmt="%H:%M:%S")
         elif logging_level == 'DEBUG':
@@ -57,7 +59,8 @@ class Perception(object):
         self.draw_color = self.range_rgb["black"]
         self.color_list = []
         self.image = None
-
+        self.th = threading.Thread(target=self.run, args=(), daemon=True)
+        self.th.start()
 
     @log_on_error(logging.DEBUG, "Can't save, Image empty")
     def sense(self):
@@ -197,7 +200,8 @@ class Perception(object):
 
     # Find the contour with the largest area
     # argument is a list of contours to compare
-    def getAreaMaxContour(self, contours):
+    @staticmethod
+    def getAreaMaxContour(contours):
         contour_area_temp = 0
         contour_area_max = 0
         area_max_contour = None
@@ -211,21 +215,25 @@ class Perception(object):
 
         return area_max_contour, contour_area_max  # returns the largest contour
 
+    def run(self, name='frame'):
+        while True:
+            self.sense()
+            if self.image is not None:
+                frame = self.process()
+                self.show(name, frame)
+                key = cv2.waitKey(1)
+                if key == 27:
+                    self.stop()
+                    print("Perception code ended")
+                    break
+
 
 if __name__ == '__main__':
-    print("Perception starting")
+
     percept = Perception('DEBUG')
     percept.setTargetColor(['red','blue','green'])
-    while True:
-        percept.sense()
-        if percept.image is not None:
-            Frame = percept.process()
-            percept.show('frame',Frame)
-            key = cv2.waitKey(1)
-            if key == 27:
-                percept.stop()
-                print("Perception code ended")
-                break
+    
+
 
 
 

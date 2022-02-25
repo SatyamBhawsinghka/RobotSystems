@@ -25,19 +25,19 @@ Board.setBusServoPulse(1, 500, 300)
 Board.setBusServoPulse(2, 500, 500)
 AK.setPitchRangeMoving((0, 10, 10), -30, -30, -90, 1500)
 time.sleep(1.5)
-result = AK.setPitchRangeMoving((percept.world_X, percept.world_Y, 7), -90, -90, 0)
+result = AK.setPitchRangeMoving((percept.world_X, percept.world_Y, 7), -90, -90, 0,2000)
 if result == False:
     print("Unreachable")
 else:
-    time.sleep(result[2]/1000)
+    time.sleep(2)
     print("reached position", percept.world_X, percept.world_Y)
 time.sleep(2)
 
-result = AK.setPitchRangeMoving((0, 0, 7), -90, -90, 0)
+result = AK.setPitchRangeMoving((0, 0, 7), -90, -90, 0, 2000)
 if result == False:
     print("Unreachable")
 else:
-    time.sleep(result[2]/1000)
+    time.sleep(2)
     print("reached position", 0, 0)
 time.sleep(2)
 

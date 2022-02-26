@@ -110,15 +110,19 @@ class Motion(Perception):
 
     def move(self):
         while True:
+            print("0")
             if self.isRunning and not self.stop:
+                print("1")
                 if self.detect_color != 'None' and self.start_pick_up:
+                    print("2")
                     self.set_rgb(self.detect_color)
                     self.setBuzzer(0.1)
                     result = self.AK.setPitchRangeMoving((self.world_X, self.world_Y, 7), -90, -90, 0)
                     if result == False:
                         self.unreachable = True
-                        print('unreachable')
+
                     else:
+                        print("3")
                         self.unreachable = False
                         time.sleep(result[2] / 1000)  # If the specified location can be reached, get the running time
 

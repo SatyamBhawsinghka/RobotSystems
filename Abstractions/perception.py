@@ -156,7 +156,7 @@ class Perception(object):
                         self.count += 1
                         self.center_list.extend((self.world_x, self.world_y))
                         if self.start_count_t1:
-                            start_count_t1 = False
+                            self.start_count_t1 = False
                             self.t1 = time.time()
                         if time.time() - self.t1 > 1:
                             self.rotation_angle = self.rect[2]

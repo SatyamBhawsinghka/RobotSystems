@@ -117,6 +117,7 @@ class Motion(Perception):
                     result = self.AK.setPitchRangeMoving((self.world_X, self.world_Y, 7), -90, -90, 0)
                     if result == False:
                         self.unreachable = True
+                        print('unreachable')
                     else:
                         self.unreachable = False
                         time.sleep(result[2] / 1000)  # If the specified location can be reached, get the running time

@@ -110,7 +110,7 @@ class Motion(Perception):
 
     def move(self):
         while True:
-            print("0")
+            print(self.world_X, self.world_Y)
             if self.isRunning and not self.stop:
                 print("1")
                 if self.detect_color != 'None' and self.start_pick_up:

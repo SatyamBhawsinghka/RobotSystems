@@ -104,6 +104,7 @@ class Motion(Perception):
             self.z_g = self.coordinate['green'][2]
             self.z_b = self.coordinate['blue'][2]
             self.z = self.z_r
+            self.dz = 2.5
         else:
             raise IOError("Task not supported")
 
@@ -114,6 +115,15 @@ class Motion(Perception):
                 if self.detect_color != 'None' and self.start_pick_up:
                     self.set_rgb(self.detect_color)
                     self.setBuzzer(0.1)
+                    if self.task == 'stacking':
+                        self.z = self.z_r
+                        self.z_r += self.dz
+                        if self.z == 2 * self.dz + self.coordinate['red'][2]:
+                            self.z_r = self.coordinate['red'][2]
+                        if self.z == self.coordinate['red'][2]:
+                            self.move_square = True
+                            time.sleep(3)
+                            self.move_square = False
                     result = self.AK.setPitchRangeMoving((self.world_X, self.world_Y, 7), -90, -90, 0)
                     if result == False:
                         self.unreachable = True
@@ -156,15 +166,25 @@ class Motion(Perception):
                         Board.setBusServoPulse(2, servo2_angle, 500)
                         time.sleep(0.5)
 
-                        if not self.isRunning:
-                            continue
-                        self.AK.setPitchRangeMoving((self.coordinate[self.detect_color][0], self.coordinate[self.detect_color][1], self.coordinate[self.detect_color][2] + 3), -90, -90, 0, 500)
+                        if self.task == 'sorting':
+                            if not self.isRunning:
+                                continue
+                            self.AK.setPitchRangeMoving((self.coordinate[self.detect_color][0], self.coordinate[self.detect_color][1], self.coordinate[self.detect_color][2] + 3), -90, -90, 0, 500)
+                        elif self.task == 'stacking':
+                            if not self.isRunning:
+                                continue
+                            self.AK.setPitchRangeMoving((self.coordinate[self.detect_color][0], self.coordinate[self.detect_color][1], self.z + 3), -90, -90, 0, 500)
                         time.sleep(0.5)
 
-                        if not self.isRunning:
-                            continue
-                        self.AK.setPitchRangeMoving((self.coordinate[self.detect_color]), -90, -90, 0, 1000)
-                        time.sleep(0.8)
+                        if self.task == 'sorting':
+                            if not self.isRunning:
+                                continue
+                            self.AK.setPitchRangeMoving((self.coordinate[self.detect_color]), -90, -90, 0, 1000)
+                        elif self.task == 'stacking':
+                            if not self.isRunning:
+                                continue
+                            self.AK.setPitchRangeMoving((self.coordinate[self.detect_color][0], self.coordinate[self.detect_color][1], self.z), -90, -90, 0, 500)
+                        time.sleep(0.5)
 
                         if not self.isRunning:
                             continue

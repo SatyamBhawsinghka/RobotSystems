@@ -58,9 +58,10 @@ class Perception(object):
         self.detect_color = 'None'
         self.draw_color = self.range_rgb["black"]
         self.color_list = []
+        self.move_square = False
         self.image = None
-        self.th = threading.Thread(target=self.run, args=(), daemon=True)
-        self.th.start()
+        self.th_p = threading.Thread(target=self.run_perception, args=(), daemon=True)
+        self.th_p.start()
 
     @log_on_error(logging.DEBUG, "Can't save, Image empty")
     def sense(self):
@@ -72,8 +73,9 @@ class Perception(object):
             raise IOError("Camera frame empty")
 
 
-    def stop(self):
+    def stop_perception(self):
         self.isRunning = False
+        print("Stopping perception")
         self.camera.camera_close()
         cv2.destroyAllWindows()
 
@@ -189,6 +191,9 @@ class Perception(object):
                 if not self.start_pick_up:
                     self.draw_color = (0, 0, 0)
                     self.detect_color = "None"
+        if self.move_square:
+            cv2.putText(img, "Make sure no blocks in the stacking area", (15, int(img.shape[0] / 2)),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
 
         cv2.putText(img, "Color: " + self.detect_color, (10, img.shape[0] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.65, self.draw_color, 2)
         return img
@@ -214,7 +219,7 @@ class Perception(object):
 
         return area_max_contour, contour_area_max  # returns the largest contour
 
-    def run(self, name='frame'):
+    def run_perception(self, name='frame'):
         while True:
             self.sense()
             if self.image is not None:
@@ -222,8 +227,7 @@ class Perception(object):
                 self.show(name, frame)
                 key = cv2.waitKey(1)
                 if key == 27:
-                    print("Perception code ended")
-                    self.stop()
+                    self.stop_perception()
                     break
 
 

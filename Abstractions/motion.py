@@ -36,6 +36,7 @@ class Motion(Perception):
         self.stop = False
         self.set_task_parameters()
         self.initMove()
+        time.sleep(1.5)
         self.th_m = threading.Thread(target=self.move, args=(), daemon=True)
         self.th_m.start()
 

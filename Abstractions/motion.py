@@ -119,7 +119,6 @@ class Motion(Perception):
                         self.unreachable = True
 
                     else:
-                        print("3")
                         self.unreachable = False
                         time.sleep(result[2] / 1000)  # If the specified location can be reached, get the running time
 

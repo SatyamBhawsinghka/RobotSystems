@@ -23,6 +23,7 @@ from perception import Perception
 class Motion(Perception):
     def __init__(self, servo1=500, task='sorting', logging_level='INFO'):
         super().__init__()
+        self.setTargetColor(['red', 'blue', 'green'])
         print("Motion starting")
         if logging_level == 'INFO':
             logging.basicConfig(format=logging_format, level=logging.INFO, datefmt="%H:%M:%S")
